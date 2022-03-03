@@ -1,10 +1,18 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
+import { ClockifyModule } from './clockify/clockify.module';
+import { GithubModule } from './github/github.module';
+import { PrismaService } from './prisma/prisma.service';
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    GithubModule,
+    ClockifyModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [PrismaService],
 })
 export class AppModule {}
