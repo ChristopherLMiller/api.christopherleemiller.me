@@ -24,7 +24,6 @@ export class ImagesService {
       });
     });
 
-    const exifData = await promiseResponse;
-    return exifData;
+    return await promiseResponse;
   }
 }

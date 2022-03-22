@@ -22,8 +22,6 @@ export class ImagesController {
     try {
       if (image) {
         const data = await this.imagesService.getExifData(image.image);
-        console.log(`we got data for image ${image.image}`);
-        console.log(data);
         return {
           status: 'success',
           data,
