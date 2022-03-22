@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { ClockifyModule } from './clockify/clockify.module';
 import { GithubModule } from './github/github.module';
+import { ImagesModule } from './images/images.module';
 import { PrismaService } from './prisma/prisma.service';
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { PrismaService } from './prisma/prisma.service';
     }),
     GithubModule,
     ClockifyModule,
+    ImagesModule,
   ],
   controllers: [AppController],
   providers: [PrismaService],

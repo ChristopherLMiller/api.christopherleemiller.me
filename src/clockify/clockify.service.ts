@@ -1,10 +1,14 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { map } from 'rxjs';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ClockifyService {
-  constructor(private httpService: HttpService) {}
+  constructor(
+    private httpService: HttpService,
+    private prisma: PrismaService,
+  ) {}
 
   getClients(
     archived?: boolean,
@@ -85,4 +89,8 @@ export class ClockifyService {
     sortColumn: 'NAME' | 'CLIENT_NAME' | 'DURATION',
     sortOrder: 'ASCENDING' | 'DESCENDING',
   ) {}
+
+  addClockifyTimer(projectId: string) {
+    return this.prisma.clockifyTimer.create({ data: { projectId: projectId } });
+  }
 }

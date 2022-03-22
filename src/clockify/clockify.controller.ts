@@ -2,7 +2,9 @@ import {
   Body,
   Controller,
   Delete,
+  ForbiddenException,
   Get,
+  Headers,
   Param,
   Post,
   Put,
@@ -95,5 +97,24 @@ export class ClockifyController {
       sortColumn,
       sortOrder,
     );
+  }
+
+  @Post('webhook')
+  getWebhook(
+    @Headers('clockify-signature') clockifySignature: string,
+    @Body() body: any,
+  ): any {
+    console.log(body);
+
+    // if the signatures don't match we need to eject with a 403 error
+    if (clockifySignature != process.env.CLOCKIFY_WEBHOOK_SIGNATURE) {
+      throw new ForbiddenException('Invalid signature');
+    }
+
+    // if the projectId is null we just will ignore this
+    if (body.projectId != null) {
+      console.log('adding projectID', body.projectId);
+      return this.clockify.addClockifyTimer(body.projectId);
+    }
   }
 }
