@@ -4,7 +4,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
-import { BasicAuthGuard } from './guards/basicAuth.guard';
+//import { BasicAuthGuard } from './guards/basicAuth.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -18,7 +18,7 @@ async function bootstrap() {
   });
 
   // apply the global guards
-  app.useGlobalGuards(new BasicAuthGuard());
+  //app.useGlobalGuards(new BasicAuthGuard());
 
   await app.listen(3000);
 }
