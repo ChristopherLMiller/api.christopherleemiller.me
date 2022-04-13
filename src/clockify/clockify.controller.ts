@@ -6,6 +6,7 @@ import {
   Headers,
   Post,
 } from '@nestjs/common';
+import { ClockifyTimer } from '@prisma/client';
 import { ClockifyService } from './clockify.service';
 
 @Controller('clockify')
@@ -16,7 +17,7 @@ export class ClockifyController {
   webhookStart(
     @Headers('clockify-signature') clockifySignature: string,
     @Body() body: any,
-  ): any {
+  ): Promise<ClockifyTimer> {
     // if the signatures don't match we need to eject with a 403 error
     if (clockifySignature != process.env.CLOCKIFY_SIGNATURE_START) {
       console.log('Invalid Clockify Webhook Signature provided');
@@ -40,7 +41,7 @@ export class ClockifyController {
   webhookStop(
     @Headers('clockify-signature') clockifySignature: string,
     @Body() body: any,
-  ): any {
+  ): Promise<ClockifyTimer> {
     // if the signatures don't match we need to eject with a 403 error
     if (clockifySignature != process.env.CLOCKIFY_SIGNATURE_STOP) {
       console.log('Invalid Clockify Webhook Signature provided');

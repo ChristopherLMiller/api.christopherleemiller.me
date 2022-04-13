@@ -9,7 +9,7 @@ export class ClockifyService {
     return this.prisma.clockifyTimer.create({ data: { projectId, startTime } });
   }
 
-  removeClockifyTimer(projectID: any) {
+  removeClockifyTimer(projectID: string) {
     return this.prisma.clockifyTimer.delete({
       where: { projectId: projectID },
     });
