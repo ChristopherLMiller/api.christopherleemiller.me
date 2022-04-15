@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// connection to supabase
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nexusPrisma {
+  provider = "nexus-prisma"
+}
+
+model ClockifyTimer {
+  id        Int    @id @default(autoincrement())
+  projectId String @unique
+  startTime String
+}
+
+model MinecraftRuleCategory {
+  id             Int             @id @default(autoincrement())
+  name           String          @unique
+  icon           String
+  MinecraftRules MinecraftRule[]
+}
+
+model MinecraftRule {
+  id          Int                   @id @default(autoincrement())
+  name        String
+  description String
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  categoryId  Int
+  category    MinecraftRuleCategory @relation(fields: [categoryId], references: [id])
+}
