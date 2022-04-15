@@ -21,6 +21,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.0.0
   '@typescript-eslint/parser': ^5.0.0
   axios: ^0.26.0
+  dotenv: ^16.0.0
   eslint: ^8.0.1
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^4.0.0
@@ -60,6 +61,7 @@ dependencies:
   '@nestjs/swagger': 5.2.1_2d1de8e4f82b331b26d5a58bf9e6f648
   '@prisma/client': 3.9.2_prisma@3.9.2
   axios: 0.26.0
+  dotenv: 16.0.0
   exif: 0.6.0
   fastify: 3.27.1
   fastify-swagger: 5.1.1

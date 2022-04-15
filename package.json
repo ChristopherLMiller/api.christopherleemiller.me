@@ -34,6 +34,7 @@
     "@nestjs/swagger": "^5.2.1",
     "@prisma/client": "^3.9.2",
     "axios": "^0.26.0",
+    "dotenv": "^16.0.0",
     "exif": "^0.6.0",
     "fastify": "^3.27.1",
     "fastify-swagger": "^5.1.1",
