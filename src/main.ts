@@ -5,7 +5,6 @@ import {
 } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-//import { BasicAuthGuard } from './guards/basicAuth.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -27,9 +26,6 @@ async function bootstrap() {
   app.enableCors({
     origin: '*',
   });
-
-  // apply the global guards
-  //app.useGlobalGuards(new BasicAuthGuard());
 
   await app.listen(3000);
 }

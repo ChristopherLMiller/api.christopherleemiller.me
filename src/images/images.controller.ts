@@ -1,7 +1,19 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Post,
+  UnsupportedMediaTypeException,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { BasicAuthGuard } from 'src/guards/basicAuth.guard';
+import { ResponseTransformInterceptor } from 'src/interceptors/responseTransform.interceptor';
 import { ImagesService } from './images.service';
 
 @Controller('images')
+@UseGuards(BasicAuthGuard)
+@UseInterceptors(ResponseTransformInterceptor)
 export class ImagesController {
   constructor(private imagesService: ImagesService) {}
 
@@ -22,22 +34,14 @@ export class ImagesController {
     try {
       if (image) {
         const data = await this.imagesService.getExifData(image.image);
-        return {
-          status: 'success',
-          data,
-        };
+        return { data, meta: { url: image.image } };
       }
     } catch (error) {
-      console.log(error);
-      return {
-        status: 'error',
-        message: error.message,
-      };
+      // if we are unable to get the EXIF data for whatever reason
+      throw new UnsupportedMediaTypeException(error.message);
     }
 
-    return {
-      status: 'error',
-      message: 'No image provided',
-    };
+    // If we got here, the user didn't supply an image
+    throw new BadRequestException('No Image Provided');
   }
 }

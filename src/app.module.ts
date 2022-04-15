@@ -4,7 +4,9 @@ import { AppController } from './app.controller';
 import { ClockifyModule } from './clockify/clockify.module';
 import { GithubModule } from './github/github.module';
 import { ImagesModule } from './images/images.module';
+import { MInecraftModule } from './minecraft/minecraft.module';
 import { PrismaService } from './prisma/prisma.service';
+import { WebhooksModule } from './webhooks/webhooks.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -13,6 +15,8 @@ import { PrismaService } from './prisma/prisma.service';
     GithubModule,
     ClockifyModule,
     ImagesModule,
+    MInecraftModule,
+    WebhooksModule,
   ],
   controllers: [AppController],
   providers: [PrismaService],
