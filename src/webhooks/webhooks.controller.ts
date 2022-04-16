@@ -7,11 +7,18 @@ import {
   Post,
 } from '@nestjs/common';
 import { ClockifyTimer } from '@prisma/client';
+import { formatDistanceStrict, parseISO } from 'date-fns';
+import { PinoLogger } from 'nestjs-pino';
 import { ClockifyService } from 'src/clockify/clockify.service';
+import { WebhooksService } from './webhooks.service';
 
 @Controller('webhooks')
 export class WebhooksController {
-  constructor(private clockify: ClockifyService) {}
+  constructor(
+    private clockify: ClockifyService,
+    private webhooks: WebhooksService,
+    private readonly logger: PinoLogger,
+  ) {}
 
   @Post('clockify/start')
   webhookStart(
@@ -20,21 +27,26 @@ export class WebhooksController {
   ): Promise<ClockifyTimer> {
     // if the signatures don't match we need to eject with a 403 error
     if (clockifySignature != process.env.CLOCKIFY_SIGNATURE_START) {
-      console.log('Invalid Clockify Webhook Signature provided');
+      this.logger.error('Invalid Clockify Webhook Signature provided');
       throw new ForbiddenException(
         'Invalid Clockify Webhook Signature provided',
       );
     }
 
-    const { projectId, timeInterval } = body;
+    const { project, timeInterval } = body;
 
     // if there isn't a projectID eject now
-    if (projectId == null) {
-      console.log('Must provide projectID');
+    if (project?.id == null) {
+      this.logger.error('Must provide projectID');
       throw new BadRequestException('Must provide projectId');
     }
+    // send a message to discord
+    this.webhooks.sendDiscordMessage(
+      `Clockify project started - ${project.name}`,
+    );
 
-    return this.clockify.addClockifyTimer(projectId, timeInterval.start);
+    // return the started timer
+    return this.clockify.addClockifyTimer(project.id, timeInterval.start);
   }
 
   @Post('clockify/stop')
@@ -44,17 +56,29 @@ export class WebhooksController {
   ): Promise<ClockifyTimer> {
     // if the signatures don't match we need to eject with a 403 error
     if (clockifySignature != process.env.CLOCKIFY_SIGNATURE_STOP) {
-      console.log('Invalid Clockify Webhook Signature provided');
+      this.logger.error('Invalid Clockify Webhook Signature provided');
       throw new ForbiddenException(
         'Invalid Clockify Webhook Signature provided',
       );
     }
+    const { project, timeInterval } = body;
+
     // if the projectId is null we just will ignore this
-    if (body.projectId == null) {
-      console.log('Must provide projectID');
+    if (project?.id == null) {
+      this.logger.error('Must provide projectID');
       throw new BadRequestException('Must provide projectId');
     }
 
-    return this.clockify.removeClockifyTimer(body.projectId);
+    // convert the timeInterval to a number
+    const timeElapsed = formatDistanceStrict(
+      parseISO(timeInterval.end),
+      parseISO(timeInterval.start),
+    );
+
+    // Send a message to discord
+    this.webhooks.sendDiscordMessage(
+      `Clockify project stopped - ${project.name}; Elapsed Time: ${timeElapsed}`,
+    );
+    return this.clockify.removeClockifyTimer(project.id);
   }
 }
