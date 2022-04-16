@@ -1,12 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { PinoLogger } from 'nestjs-pino';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class MinecraftService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly logger: PinoLogger,
+  ) {}
 
-  findRules(categoryId: number): any {
-    return this.prisma.minecraftRule.findMany({ where: { categoryId } });
+  findRules(): any {
+    return this.prisma.minecraftRule.findMany();
+  }
+
+  findRule(ruleId: number): any {
+    this.logger.info(ruleId);
+    return this.prisma.minecraftRule.findFirst({ where: { id: ruleId } });
   }
 
   findRulesCategories(): any {
