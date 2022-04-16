@@ -4,12 +4,14 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
+    { bufferLogs: true },
   );
 
   // Setup swagger
@@ -26,6 +28,9 @@ async function bootstrap() {
   app.enableCors({
     origin: '*',
   });
+
+  // enable logger
+  app.useLogger(app.get(Logger));
 
   await app.listen(process.env.PORT || 3000, '0.0.0.0');
 }

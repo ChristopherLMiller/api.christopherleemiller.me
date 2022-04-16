@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { LoggerModule } from 'nestjs-pino';
 import { AppController } from './app.controller';
 import { ClockifyModule } from './clockify/clockify.module';
 import { GithubModule } from './github/github.module';
@@ -12,6 +13,7 @@ import { WebhooksModule } from './webhooks/webhooks.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    LoggerModule.forRoot(),
     GithubModule,
     ClockifyModule,
     ImagesModule,
