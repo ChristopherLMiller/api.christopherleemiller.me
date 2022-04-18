@@ -21,7 +21,7 @@ export class WebhooksController {
   ) {}
 
   @Post('clockify/start')
-  webhookStart(
+  webhookClockifyStart(
     @Headers('clockify-signature') clockifySignature: string,
     @Body() body: any,
   ): Promise<ClockifyTimer> {
@@ -42,7 +42,7 @@ export class WebhooksController {
     }
     // send a message to discord
     this.webhooks.sendDiscordMessage(
-      `Clockify project started - ${project.name}`,
+      `Clockify timer started - ${project.name}`,
     );
 
     // return the started timer
@@ -50,7 +50,7 @@ export class WebhooksController {
   }
 
   @Post('clockify/stop')
-  webhookStop(
+  webhookClockifyStop(
     @Headers('clockify-signature') clockifySignature: string,
     @Body() body: any,
   ): Promise<ClockifyTimer> {
@@ -77,7 +77,34 @@ export class WebhooksController {
 
     // Send a message to discord
     this.webhooks.sendDiscordMessage(
-      `Clockify project stopped - ${project.name}; Elapsed Time: ${timeElapsed}`,
+      `Clockify timer stopped - ${project.name}; Elapsed Time: ${timeElapsed}`,
+    );
+    return this.clockify.removeClockifyTimer(project.id);
+  }
+
+  @Post('clockify/delete')
+  webhookClockifyDelete(
+    @Headers('clockify-signature') clockifySignature: string,
+    @Body() body: any,
+  ): Promise<ClockifyTimer> {
+    // if the signatures don't match we need to eject with a 403 error
+    if (clockifySignature != process.env.CLOCKIFY_SIGNATURE_STOP) {
+      this.logger.error('Invalid Clockify Webhook Signature provided');
+      throw new ForbiddenException(
+        'Invalid Clockify Webhook Signature provided',
+      );
+    }
+    const { project } = body;
+
+    // if the projectId is null we just will ignore this
+    if (project?.id == null) {
+      this.logger.error('Must provide projectID');
+      throw new BadRequestException('Must provide projectId');
+    }
+
+    // Send a message to discord
+    this.webhooks.sendDiscordMessage(
+      `Clockify timer deleted - ${project.name}`,
     );
     return this.clockify.removeClockifyTimer(project.id);
   }
