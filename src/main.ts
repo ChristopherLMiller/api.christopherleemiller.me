@@ -4,8 +4,10 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as Sentry from '@sentry/node';
 import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
+import { SentryInterceptor } from './interceptors/sentry.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -31,6 +33,12 @@ async function bootstrap() {
 
   // enable logger
   app.useLogger(app.get(Logger));
+
+  // Initialize Sentry
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+  });
+  app.useGlobalInterceptors(new SentryInterceptor());
 
   await app.listen(process.env.PORT || 3000, '0.0.0.0');
 }
