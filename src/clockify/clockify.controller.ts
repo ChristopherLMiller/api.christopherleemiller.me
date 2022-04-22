@@ -28,7 +28,7 @@ export class ClockifyController {
   }
 
   @Post('stop-timer')
-  stopTimer(): Observable<any> {
-    return this.clockify.stopTimer();
+  stopTimer(@Body() body: any): Observable<any> {
+    return this.clockify.stopTimer(body?.projectId);
   }
 }
