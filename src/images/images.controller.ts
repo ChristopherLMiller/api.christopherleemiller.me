@@ -1,8 +1,8 @@
 import {
   BadRequestException,
-  Body,
   Controller,
-  Post,
+  Get,
+  Query,
   UnsupportedMediaTypeException,
   UseGuards,
   UseInterceptors,
@@ -17,31 +17,21 @@ import { ImagesService } from './images.service';
 export class ImagesController {
   constructor(private imagesService: ImagesService) {}
 
-  @Post('exif')
-  async getExif(@Body() body: any): Promise<any> {
-    let image; // pre-create the image holder
-
-    switch (typeof body) {
-      case 'string':
-        image = JSON.parse(body);
-        break;
-      case 'object':
-        image = body;
-        break;
+  @Get('exif')
+  async getExif(@Query('url') url: string): Promise<any> {
+    if (!url) {
+      throw new BadRequestException('Image url is required');
     }
 
     // try and get the contents
     try {
-      if (image) {
-        const data = await this.imagesService.getExifData(image.image);
-        return { data, meta: { url: image.image } };
+      if (url) {
+        const data = await this.imagesService.getExifData(url);
+        return { data, meta: { url: url } };
       }
     } catch (error) {
       // if we are unable to get the EXIF data for whatever reason
       throw new UnsupportedMediaTypeException(error.message);
     }
-
-    // If we got here, the user didn't supply an image
-    throw new BadRequestException('No Image Provided');
   }
 }
