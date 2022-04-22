@@ -41,3 +41,7 @@ lerna-debug.log*
 # Prisma DB
 prisma/dev.db 
 prisma/dev.db-journal
+
+# Sentry
+.sentryclirc
+sentry.properties
