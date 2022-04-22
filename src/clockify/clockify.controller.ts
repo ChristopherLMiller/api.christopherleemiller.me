@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UseGuards,
   UseInterceptors,
@@ -32,8 +33,8 @@ export class ClockifyController {
     return this.clockify.stopTimer(body?.projectId);
   }
 
-  @Post('buildtime')
-  getBuildTime(@Body() body: any): Observable<any> {
-    return this.clockify.getBuildTime(body?.projectId);
+  @Get('buildtime/:id')
+  getBuildTime(@Param('id') id: any): Observable<any> {
+    return this.clockify.getBuildTime(id);
   }
 }

@@ -55,7 +55,7 @@ export class ClockifyService {
 
   getBuildTime(projectId: string): Observable<any> {
     if (projectId === null) {
-      throw new BadRequestException('Must provide clockify porjectId');
+      throw new BadRequestException('Must provide clockify project_id');
     }
 
     return this.http.get(
