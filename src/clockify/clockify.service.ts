@@ -52,4 +52,14 @@ export class ClockifyService {
       },
     );
   }
+
+  getBuildTime(projectId: string): Observable<any> {
+    if (projectId === null) {
+      throw new BadRequestException('Must provide clockify porjectId');
+    }
+
+    return this.http.get(
+      `workspaces/${process.env.CLOCKIFY_WORKSPACE_ID}/projects/${projectId}`,
+    );
+  }
 }

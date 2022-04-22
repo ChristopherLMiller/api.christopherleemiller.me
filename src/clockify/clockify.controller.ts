@@ -31,4 +31,9 @@ export class ClockifyController {
   stopTimer(@Body() body: any): Observable<any> {
     return this.clockify.stopTimer(body?.projectId);
   }
+
+  @Post('buildtime')
+  getBuildTime(@Body() body: any): Observable<any> {
+    return this.clockify.getBuildTime(body?.projectId);
+  }
 }

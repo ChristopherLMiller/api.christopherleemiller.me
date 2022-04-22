@@ -1,6 +1,7 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { WebhooksService } from 'src/webhooks/webhooks.service';
 import { ClockifyController } from './clockify.controller';
 import { ClockifyService } from './clockify.service';
 
@@ -16,6 +17,6 @@ require('dotenv').config();
       },
     }),
   ],
-  providers: [ClockifyService, PrismaService],
+  providers: [ClockifyService, PrismaService, WebhooksService],
 })
 export class ClockifyModule {}
