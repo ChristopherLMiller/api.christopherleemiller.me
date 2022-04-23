@@ -21,6 +21,7 @@ async function bootstrap() {
     .setTitle('Its Miller Time API')
     .setDescription('API Docs for all itsmillertime.dev sites')
     .setVersion('1.0')
+    .addApiKey({ type: 'apiKey', name: 'x-api-key', in: 'header' }, 'x-api-key')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);

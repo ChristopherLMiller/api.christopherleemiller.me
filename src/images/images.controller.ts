@@ -8,13 +8,19 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiSecurity,
+  ApiTags,
+} from '@nestjs/swagger';
 import { BasicAuthGuard } from 'src/guards/basicAuth.guard';
 import { ResponseTransformInterceptor } from 'src/interceptors/responseTransform.interceptor';
 import { ImagesService } from './images.service';
 
 @Controller('images')
 @ApiTags('images')
+@ApiSecurity('x-api-key')
 @UseGuards(BasicAuthGuard)
 @UseInterceptors(ResponseTransformInterceptor)
 export class ImagesController {
