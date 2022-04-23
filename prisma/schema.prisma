@@ -7,12 +7,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Generates the client that we use for the REST API
 generator client {
   provider = "prisma-client-js"
 }
 
-generator nexusPrisma {
-  provider = "nexus-prisma"
+// Generator for the controllers
+generator nestjsDto {
+  provider = "prisma-generator-nestjs-dto"
+  output   = "../src/prisma/dto.ts"
+}
+
+// Generates the Graphql counterparts
+generator nestgraphql {
+  provider = "node node_modules/prisma-nestjs-graphql"
+  output   = "../src/prisma/graphql"
 }
 
 model ClockifyTimer {
@@ -36,4 +45,10 @@ model MinecraftRule {
   updatedAt   DateTime              @updatedAt
   categoryId  Int
   category    MinecraftRuleCategory @relation(fields: [categoryId], references: [id])
+}
+
+model ImageExif {
+  id   Int    @id @default(autoincrement())
+  url  String @unique
+  exif Json
 }
