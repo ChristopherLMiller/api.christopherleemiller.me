@@ -9,6 +9,8 @@ import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 import { SentryInterceptor } from './interceptors/sentry.interceptor';
 
+const packageData = require('./package.json');
+
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
@@ -37,6 +39,11 @@ async function bootstrap() {
   // Initialize Sentry
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
+    release: packageData.version,
+    environment: process.env.NODE_ENV,
+    ignoreErrors: [
+      'UnsupportedMediaTypeException: No Exif segment found in the given image.',
+    ],
   });
   app.useGlobalInterceptors(new SentryInterceptor());
 
