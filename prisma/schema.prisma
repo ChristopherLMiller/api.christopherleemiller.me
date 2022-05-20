@@ -52,3 +52,12 @@ model ImageExif {
   url  String @unique
   exif Json
 }
+
+model Marker {
+  id         Int     @id @default(autoincrement())
+  lat        Decimal
+  lon        Decimal
+  title      String
+  siteURL    String
+  galleryURL String
+}

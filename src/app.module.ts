@@ -6,7 +6,8 @@ import { AppController } from './app.controller';
 import { ClockifyModule } from './clockify/clockify.module';
 import { GithubModule } from './github/github.module';
 import { ImagesModule } from './images/images.module';
-import { MInecraftModule } from './minecraft/minecraft.module';
+import { MapModule } from './maps/maps.module';
+import { MinecraftModule } from './minecraft/minecraft.module';
 import { PrismaService } from './prisma/prisma.service';
 import { WebhooksModule } from './webhooks/webhooks.module';
 
@@ -21,7 +22,8 @@ import { WebhooksModule } from './webhooks/webhooks.module';
     GithubModule,
     ClockifyModule,
     ImagesModule,
-    MInecraftModule,
+    MinecraftModule,
+    MapModule,
     WebhooksModule,
   ],
   controllers: [AppController],

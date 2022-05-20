@@ -7,11 +7,13 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { BasicAuthGuard } from 'src/guards/basicAuth.guard';
 import { ResponseTransformInterceptor } from 'src/interceptors/responseTransform.interceptor';
 import { MinecraftService } from './minecraft.service';
 
 @Controller('minecraft/server')
+@ApiTags('minecraft/server')
 @UseGuards(BasicAuthGuard)
 @UseInterceptors(ResponseTransformInterceptor)
 export class MinecraftServerController {
