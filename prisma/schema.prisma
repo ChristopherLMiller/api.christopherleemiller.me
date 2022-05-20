@@ -60,4 +60,7 @@ model Marker {
   title      String
   siteURL    String
   galleryURL String
+  visited    Boolean @default(false)
+  visits     Int     @default(0)
+  rating     Int     @default(0)
 }
