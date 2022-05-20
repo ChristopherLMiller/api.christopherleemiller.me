@@ -2,10 +2,9 @@ import { Module } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { MinecraftService } from './minecraft.service';
 import { MinecraftServerController } from './minecraftServer.controller';
-import { MinecraftStatsController } from './minecraftStats.controller';
 
 @Module({
-  controllers: [MinecraftServerController, MinecraftStatsController],
+  controllers: [MinecraftServerController],
   imports: [],
   providers: [MinecraftService, PrismaService],
 })
