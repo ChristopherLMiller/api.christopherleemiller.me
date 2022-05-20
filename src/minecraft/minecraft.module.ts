@@ -5,7 +5,7 @@ import { MinecraftServerController } from './minecraftServer.controller';
 import { MinecraftStatsController } from './minecraftStats.controller';
 
 @Module({
-  controllers: [MinecraftServerController, MinecraftStatsController],
+  controllers: [MinecraftStatsController, MinecraftServerController],
   imports: [],
   providers: [MinecraftService, PrismaService],
 })
