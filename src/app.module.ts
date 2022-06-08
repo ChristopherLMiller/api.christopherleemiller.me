@@ -3,13 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggerModule } from 'nestjs-pino';
 import { AppController } from './app.controller';
-import { ClockifyModule } from './clockify/clockify.module';
-import { GithubModule } from './github/github.module';
-import { ImagesModule } from './images/images.module';
-import { MapModule } from './maps/maps.module';
-import { MinecraftModule } from './minecraft/minecraft.module';
 import { PrismaService } from './prisma/prisma.service';
-import { WebhooksModule } from './webhooks/webhooks.module';
+import { V1Module } from './v1/v1.module';
 
 @Module({
   imports: [
@@ -19,12 +14,7 @@ import { WebhooksModule } from './webhooks/webhooks.module';
     }),
     CacheModule.register(),
     LoggerModule.forRoot(),
-    GithubModule,
-    ClockifyModule,
-    ImagesModule,
-    MinecraftModule,
-    MapModule,
-    WebhooksModule,
+    V1Module,
   ],
   controllers: [AppController],
   providers: [

@@ -11,8 +11,8 @@ import { BasicAuthGuard } from 'src/guards/basicAuth.guard';
 import { ResponseTransformInterceptor } from 'src/interceptors/responseTransform.interceptor';
 import { MapsService } from './maps.service';
 
-@Controller('map')
-@ApiTags('map')
+@Controller({ version: '1', path: 'maps' })
+@ApiTags('Maps')
 @UseGuards(BasicAuthGuard)
 @UseInterceptors(ResponseTransformInterceptor)
 export class MapsController {

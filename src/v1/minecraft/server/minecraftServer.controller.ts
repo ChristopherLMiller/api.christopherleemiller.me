@@ -10,10 +10,10 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { BasicAuthGuard } from 'src/guards/basicAuth.guard';
 import { ResponseTransformInterceptor } from 'src/interceptors/responseTransform.interceptor';
-import { MinecraftService } from './minecraft.service';
+import { MinecraftService } from '../minecraft.service';
 
-@Controller('minecraft/server')
-@ApiTags('minecraft/server')
+@Controller({ version: '1', path: 'minecraft/server' })
+@ApiTags('Minecraft Server')
 @UseGuards(BasicAuthGuard)
 @UseInterceptors(ResponseTransformInterceptor)
 export class MinecraftServerController {

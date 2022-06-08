@@ -5,11 +5,13 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { BasicAuthGuard } from 'src/guards/basicAuth.guard';
 import { ResponseTransformInterceptor } from 'src/interceptors/responseTransform.interceptor';
 import { GithubService } from './github.service';
 
-@Controller('github')
+@Controller({ version: '1', path: 'github' })
+@ApiTags('Github')
 @UseGuards(BasicAuthGuard)
 @UseInterceptors(ResponseTransformInterceptor)
 export class GithubController {
@@ -17,6 +19,6 @@ export class GithubController {
 
   @Get('user/:login')
   getUser(@Param('login') login: string): any {
-    return this.github.findUser(login);
+    return { data: this.github.findUser(login) };
   }
 }
