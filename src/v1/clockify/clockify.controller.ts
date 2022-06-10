@@ -7,12 +7,14 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 import { BasicAuthGuard } from 'src/guards/basicAuth.guard';
 import { ResponseTransformInterceptor } from 'src/interceptors/responseTransform.interceptor';
 import { ClockifyService } from './clockify.service';
 
-@Controller('clockify')
+@Controller({ version: '1', path: 'clockify' })
+@ApiTags('Clockify')
 @UseGuards(BasicAuthGuard)
 @UseInterceptors(ResponseTransformInterceptor)
 export class ClockifyController {

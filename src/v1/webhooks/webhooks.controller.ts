@@ -6,13 +6,15 @@ import {
   Headers,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ClockifyTimer } from '@prisma/client';
 import { formatDistanceStrict, parseISO } from 'date-fns';
 import { PinoLogger } from 'nestjs-pino';
-import { ClockifyService } from 'src/clockify/clockify.service';
+import { ClockifyService } from '../clockify/clockify.service';
 import { WebhooksService } from './webhooks.service';
 
-@Controller('webhooks')
+@Controller({ version: '1', path: 'webhooks' })
+@ApiTags('webhooks')
 export class WebhooksController {
   constructor(
     private clockify: ClockifyService,

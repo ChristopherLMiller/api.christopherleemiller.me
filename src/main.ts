@@ -1,3 +1,4 @@
+import { VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
@@ -17,6 +18,11 @@ async function bootstrap() {
     new FastifyAdapter(),
     { bufferLogs: true },
   );
+
+  // Enable versioning
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
 
   // Setup swagger
   const config = new DocumentBuilder()

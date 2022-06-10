@@ -3,7 +3,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PinoLogger } from 'nestjs-pino';
 import { Observable } from 'rxjs';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { WebhooksService } from 'src/webhooks/webhooks.service';
+import { WebhooksService } from '../webhooks/webhooks.service';
 
 @Injectable()
 export class ClockifyService {
