@@ -23,6 +23,7 @@ export class ImagesService {
 
       // If we have valid data lets return it now
       if (exifData) {
+        console.log('exifData was found in the cache');
         return { data: exifData, meta: { cached: true, url: image } };
       }
     }
@@ -50,10 +51,11 @@ export class ImagesService {
 
     // If we are caching the result, lets store that
     if (cache === true) {
+      const insertedData = await this.prisma.imageExif.create({
+        data: { url: image, exif: imageMeta },
+      });
       return {
-        data: this.prisma.imageExif.create({
-          data: { url: image, exif: imageMeta },
-        }),
+        data: insertedData,
         meta: { cached: cache, url: image },
       };
     } else {
