@@ -47,7 +47,7 @@ export class ImagesService {
     });
 
     // this is the meta of the image here
-    const imageMeta = (await promiseReponse) as Prisma.ImageExifCreateInput;
+    const imageMeta = (await promiseReponse) as Prisma.InputJsonObject;
 
     // If we are caching the result, lets store that
     if (cache === true) {
