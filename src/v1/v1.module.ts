@@ -5,6 +5,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ClockifyModule } from './clockify/clockify.module';
 import { GithubModule } from './github/github.module';
+import { GraphqlModule } from './graphql/graphql.module';
 import { ImagesModule } from './images/images.module';
 import { MapModule } from './maps/maps.module';
 import { MinecraftModule } from './minecraft/minecraft.module';
@@ -25,6 +26,7 @@ import { WebhooksModule } from './webhooks/webhooks.module';
     MinecraftModule,
     MapModule,
     WebhooksModule,
+    GraphqlModule,
   ],
   controllers: [V1Controller],
   providers: [

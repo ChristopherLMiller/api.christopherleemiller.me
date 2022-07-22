@@ -14,20 +14,24 @@ export class ClockifyService {
     private webhooks: WebhooksService,
   ) {}
 
+  // Start new timer for projectID
   addClockifyTimer(projectId: string, startTime: string) {
     return this.prisma.clockifyTimer.create({ data: { projectId, startTime } });
   }
 
+  // Stop time for projectID
   removeClockifyTimer(projectID: string) {
     return this.prisma.clockifyTimer.delete({
       where: { projectId: projectID },
     });
   }
 
+  // Get list of workspaces
   getWorkspaces(): Observable<any> {
     return this.http.get('workspaces');
   }
 
+  // Function to run when timers are started
   startTimer(projectId: string): Observable<any> {
     if (projectId === null) {
       throw new BadRequestException('Must provide projectId');
@@ -43,6 +47,7 @@ export class ClockifyService {
     );
   }
 
+  // Function to run when timers are stopped
   stopTimer(projectId: string): Observable<any> {
     this.webhooks.sendDiscordMessage(`Clockify Project Stopped - ${projectId}`);
     return this.http.patch(
@@ -53,6 +58,7 @@ export class ClockifyService {
     );
   }
 
+  // Get the build time of the projectID specified
   getBuildTime(projectId: string): Observable<any> {
     if (projectId === null) {
       throw new BadRequestException('Must provide clockify project_id');
