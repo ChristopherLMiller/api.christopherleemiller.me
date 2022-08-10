@@ -4,7 +4,7 @@ import { catchError, firstValueFrom, Observable } from 'rxjs';
 import { handleAxiosError } from 'src/handleAxiosError';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { WebhooksService } from '../webhooks/webhooks.service';
-import { StartTimerDto } from './dto';
+import { ClockifyWorkspaceDto, StartTimerDto } from './dto';
 
 @Injectable()
 export class ClockifyService {
@@ -27,18 +27,26 @@ export class ClockifyService {
   }
 
   // Get list of workspaces
-  getWorkspaces(): Observable<any> {
+  getWorkspaces(): Observable<ClockifyWorkspaceDto> {
     return this.http.get('workspaces');
   }
 
   // Get list of projects
-  getProjects(archived = false, pageSize = 25): Observable<any> {
+  getProjects({
+    name,
+    archived = false,
+    pageSize = 25,
+    page = 1,
+  }): Observable<any> {
+    console.log(archived, pageSize, page, name);
     return this.http.get(
       `/workspaces/${process.env.CLOCKIFY_WORKSPACE_ID}/projects`,
       {
         params: {
           archived,
           'page-size': pageSize,
+          page,
+          name,
         },
       },
     );
@@ -58,7 +66,6 @@ export class ClockifyService {
         projectId,
       })
       .pipe(catchError(handleAxiosError));
-    console.log(response);
     return firstValueFrom(response);
   }
 

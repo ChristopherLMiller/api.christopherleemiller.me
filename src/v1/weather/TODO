@@ -1,1 +1,0 @@
-we need weather API endpoints to link to whatever weather API i want to use (open weather map) and return this data back to the client, with caching and rate limiting.

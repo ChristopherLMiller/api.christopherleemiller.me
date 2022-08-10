@@ -10,6 +10,7 @@ import { ImagesModule } from './images/images.module';
 import { MapModule } from './maps/maps.module';
 import { MinecraftModule } from './minecraft/minecraft.module';
 import { V1Controller } from './v1.controller';
+import { WeatherModule } from './weather/weather.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
 
 @Module({
@@ -27,6 +28,7 @@ import { WebhooksModule } from './webhooks/webhooks.module';
     MapModule,
     WebhooksModule,
     GraphqlModule,
+    WeatherModule,
   ],
   controllers: [V1Controller],
   providers: [

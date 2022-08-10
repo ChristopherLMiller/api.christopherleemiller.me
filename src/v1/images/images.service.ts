@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client';
 import { firstValueFrom } from 'rxjs';
 import { ImageExif } from 'src/prisma/dto.ts/imageExif.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ReponseData } from 'types';
+import { DataResponse } from 'types';
 
 const ExifImage = require('exif').ExifImage;
 
@@ -18,7 +18,7 @@ export class ImagesService {
   async getExifData(
     image: string,
     cache: boolean = true,
-  ): Promise<ReponseData<ImageExif | Prisma.InputJsonObject>> {
+  ): Promise<DataResponse<ImageExif | Prisma.InputJsonObject>> {
     // we take different paths depending on if the user wants cached data or not
     if (cache) {
       // See if the data already exists
@@ -28,7 +28,6 @@ export class ImagesService {
 
       // If we have valid data lets return it now
       if (exifData) {
-        console.log('exifData was found in the cache');
         return { data: exifData, meta: { cached: true, url: image } };
       }
     }
@@ -53,7 +52,6 @@ export class ImagesService {
 
     // this is the meta of the image here
     const imageMeta = (await promiseReponse) as Prisma.InputJsonObject;
-    console.log(imageMeta);
 
     // If we are caching the result, lets store that
     if (cache === true) {

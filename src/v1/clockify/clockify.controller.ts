@@ -5,6 +5,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -44,11 +45,13 @@ export class ClockifyController {
   @ApiResponse({ status: 200, description: 'Success' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  getProjects(
-    @Param('archived') archived: boolean,
-    @Param('page-size') pageSize: number,
-  ): Observable<any> {
-    return this.clockify.getProjects(archived, pageSize);
+  getProjects<getProjectsDto>(
+    @Query('archived') archived?: boolean,
+    @Query('page-size') pageSize?: number,
+    @Query('name') name?: string,
+    @Query('page') page?: number,
+  ): Observable<getProjectsDto> {
+    return this.clockify.getProjects({ archived, pageSize, page, name });
   }
 
   @HttpCode(200)
