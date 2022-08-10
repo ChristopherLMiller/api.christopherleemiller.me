@@ -13,19 +13,19 @@ generator client {
 }
 
 // Generator for the controllers
-generator nestjsDto {
-  provider                        = "prisma-generator-nestjs-dto"
-  output                          = "../src/generated/nestjs-dto"
-  outputToNestJsResourceStructure = "false"
-  exportRelationModifierClasses   = "true"
-  reExport                        = "true"
-  createDtoPrefix                 = "Create"
-  updateDtoPrefix                 = "Update"
-  dtoSuffix                       = "Dto"
-  entityPrefix                    = ""
-  entitySuffix                    = ""
-  fileNamingStyle                 = "camel"
-}
+//generator nestjsDto {
+//  provider                        = "prisma-generator-nestjs-dto"
+//  output                          = "../src/generated/nestjs-dto"
+//  outputToNestJsResourceStructure = "false"
+//  exportRelationModifierClasses   = "true"
+//  reExport                        = "true"
+//  createDtoPrefix                 = "Create"
+//  updateDtoPrefix                 = "Update"
+//  dtoSuffix                       = "Dto"
+//  entityPrefix                    = ""
+//  entitySuffix                    = ""
+//  fileNamingStyle                 = "camel"
+//}
 
 // Generates the Graphql counterparts
 //generator nestgraphql {
