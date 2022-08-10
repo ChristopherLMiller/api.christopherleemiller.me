@@ -2,7 +2,6 @@ import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggerModule } from 'nestjs-pino';
-import { AppController } from './app.controller';
 import { PrismaService } from './prisma/prisma.service';
 import { V1Module } from './v1/v1.module';
 
@@ -16,7 +15,7 @@ import { V1Module } from './v1/v1.module';
     LoggerModule.forRoot(),
     V1Module,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [
     PrismaService,
     {
